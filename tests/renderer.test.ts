@@ -6,9 +6,8 @@ describe('renderer', () => {
   it('returns a silent buffer when notes list is empty', () => {
     const samples = renderToSamples([], 44100);
     expect(samples.length).toBe(44100);
-    for (let i = 0; i < samples.length; i++) {
-      expect(samples[i]).toBe(0);
-    }
+    const allZero = samples.every(s => s === 0);
+    expect(allZero).toBe(true);
   });
 
   it('renders a single note correctly with non-zero samples and normalization', () => {
