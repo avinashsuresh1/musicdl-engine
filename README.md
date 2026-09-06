@@ -56,4 +56,4 @@ npm run tauri:build
 
 ## 🔗 Related Repositories
 
-* **[`musicdl-spec`](file:///d:/MusicDL/musicdl-spec)**: Official, language-agnostic YAML specification, schema definitions, register shift tips, and example compositions.
+* **[`musicdl-spec`](file:///d:/MusicDL/musicdl-spec)**: A language-agnostic YAML specification, schema definitions and example compositions.
