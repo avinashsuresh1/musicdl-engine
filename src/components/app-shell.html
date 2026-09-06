@@ -1,0 +1,238 @@
+<mdl-toolbar></mdl-toolbar>
+
+<div class="main-container">
+  <mdl-explorer></mdl-explorer>
+  <div class="resizer-horizontal" id="resizer-sidebar" title="Drag to resize sidebar"></div>
+  <mdl-code-editor></mdl-code-editor>
+</div>
+
+<div class="resizer-vertical" id="resizer-bottom" title="Drag to resize panel"></div>
+<div class="bottom-panel">
+  <mdl-visualizer></mdl-visualizer>
+  <div class="error-bar"></div>
+</div>
+
+<div class="help-modal" id="help-modal">
+  <div class="help-content">
+    <button class="close-btn" id="close-help">&times;</button>
+    <h2>🎼 MusicDL Schema Reference</h2>
+    
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="tab-meta">1. Project & Meta</button>
+      <button class="tab-btn" data-tab="tab-instrument">2. Instrument & ADSR</button>
+      <button class="tab-btn" data-tab="tab-melody">3. Melody, Chord & Track</button>
+    </div>
+
+    <!-- TAB 1: PROJECT & META -->
+    <div class="tab-pane active" id="tab-meta">
+      <p><strong>MusicDL</strong> is a folder-structured, YAML-based Music Definition Language designed for composing music using relative pitch intervals and additive synthesis.</p>
+      
+      <h3>Project File Structure</h3>
+      <p>Every project resides in a single folder containing a metadata file and subfolders:</p>
+      <div class="code-block">my-project/
+├── composition.yaml
+├── instruments/
+│   ├── pad.yaml
+│   └── bass_synth.yaml
+├── melodies/
+│   └── theme.yaml
+├── chords/
+│   └── c_major.yaml
+└── tracks/
+    └── lead_track.yaml</div>
+
+      <h3>composition.yaml Schema</h3>
+      <p>Defines global composition metadata and microtuning rules:</p>
+      <div class="code-block">title: "Moonlit Sonata"   # Composition title (non-empty string)
+tempo: 90               # Playback tempo in beats per minute (BPM)
+root_frequency: 261.63   # Frequency in Hz of pitch 0 (Middle C)
+interval: 100           # Size of one pitch step in cents (default 100)</div>
+
+      <h3>Relative Pitch Formula</h3>
+      <p>Notes define pitch in integer intervals w.r.t the root pitch 0. The frequency of a note is calculated as:</p>
+      <div class="formula-box" style="font-family: monospace; font-size: 15px; text-align: center; padding: 16px;">
+        <strong>f = f<sub>root</sub> &times; 2<sup>(pitch &times; interval) / 1200</sup></strong>
+      </div>
+      <ul>
+        <li>By default, <code>interval: 100</code> (equal temperament semitones). Pitch <code>12</code> is an octave higher.</li>
+        <li>To use quarter-tones (24-TET), set <code>interval: 50</code>.</li>
+      </ul>
+    </div>
+
+    <!-- TAB 2: INSTRUMENT & ADSR -->
+    <div class="tab-pane" id="tab-instrument">
+      <p>Instruments define timbres using <strong>additive synthesis</strong> (adding sine waves at different frequencies) and an optional <strong>ADSR volume envelope</strong>.</p>
+      
+      <h3>Harmonic Spectrum Schema</h3>
+      <p>Each instrument YAML file in <code>instruments/</code> contains a list of partials:</p>
+      <div class="code-block"># instruments/sine_pad.yaml
+harmonics:
+  - { z: 1, amplitude: 1.0 }   # Fundamental frequency (pitch frequency)
+  - { z: 2, amplitude: 0.5 }   # 2nd harmonic (octave higher)
+  - { z: 3, amplitude: 0.25 }  # 3rd harmonic (perfect fifth)
+  - { z: 0.5, amplitude: 0.3 } # Subharmonic (octave lower, non-integer z)</div>
+      <ul>
+        <li><code>z</code>: Frequency multiplier (positive number, can be non-integer for inharmonic timbres).</li>
+        <li><code>amplitude</code>: Level of this partial (float between <code>0.0</code> and <code>1.0</code>).</li>
+      </ul>
+
+      <h3>Octave Register Shift (`octave_shift`) & Clefs</h3>
+      <p>Specifies an integer octave register shift for the instrument (e.g., <code>-1</code> for 1 octave lower, <code>1</code> for 1 octave higher):</p>
+      <div class="code-block"># instruments/sub_bass.yaml
+octave_shift: -1 # Shift 1 octave lower (-12 semitones)
+harmonics:
+  - { z: 1, amplitude: 1.0 }</div>
+      <p><strong>Musical Clefs Connection:</strong> In traditional musical notation, instruments use <strong>Clefs</strong> to write notes in their acoustic register. <code>octave_shift</code> is the general mathematical primitive representing musical clefs:</p>
+      <ul>
+        <li><code>octave_shift: -1</code> or <code>-2</code> &hArr; <strong>Bass Clef / 8vb</strong> (Sub Bass, Cello, Tuba)</li>
+        <li><code>octave_shift: 0</code> &hArr; <strong>Alto / Tenor / Treble Clef</strong> (Piano, Flute, Strings)</li>
+        <li><code>octave_shift: 1</code> or <code>2</code> &hArr; <strong>Treble 8va</strong> (Piccolo, High Bells)</li>
+      </ul>
+
+      <h3>Code-Defined Instrument Presets</h3>
+      <p>MusicDL empowers you to craft rich instruments purely out of code. Here are several ready-to-use instrument definitions:</p>
+      
+      <h4>1. Acoustic Flute (Inharmonic Air Chiff & Tube Resonance)</h4>
+      <div class="code-block"># instruments/flute.yaml
+harmonics:
+  - { z: 1.0,   amplitude: 1.0 }   # Fundamental tone
+  - { z: 0.5,   amplitude: 0.08 }  # Soft low tube resonance
+  - { z: 1.003, amplitude: 0.04 }  # Air stream phase flutter
+  - { z: 3.14,  amplitude: 0.02 }  # Inharmonic high air chiff
+adsr:
+  attack: 50
+  decay: 40
+  sustain: 0.95
+  release: 200</div>
+
+      <h4>2. Bansuri (Indian Bamboo Flute - Organic Breath Swell & Hollow 3rd Harmonic)</h4>
+      <div class="code-block"># instruments/bansuri.yaml
+harmonics:
+  - { z: 1, amplitude: 0.2 }        # Core fundamental pitch
+  - { z: 3, amplitude: 0.2 }        # Hollow odd-harmonic bamboo pipe overtone
+  - { z: 0.1, amplitude: 0.0025 }   # Subharmonic low air column depth
+adsr:
+  attack: 800     # Organic breath swell (meend / air entrance)
+  decay: 100
+  sustain: 0.3
+  release: 200   # Natural air dissipation</div>
+
+      <h4>3. Acoustic Piano (Percussive Attack & Rich Harmonic Decay)</h4>
+      <div class="code-block"># instruments/piano.yaml
+harmonics:
+  - { z: 1, amplitude: 1.0 }
+  - { z: 2, amplitude: 0.5 }
+  - { z: 3, amplitude: 0.25 }
+  - { z: 4, amplitude: 0.12 }
+adsr:
+  attack: 5
+  decay: 300
+  sustain: 0.2
+  release: 350</div>
+
+      <h4>4. Tubular Chime / Bell (Inharmonic Non-Integer Overtones)</h4>
+      <div class="code-block"># instruments/bell.yaml
+harmonics:
+  - { z: 1.0, amplitude: 1.0 }
+  - { z: 2.76, amplitude: 0.5 }
+  - { z: 5.4, amplitude: 0.25 }
+adsr:
+  attack: 1
+  decay: 400
+  sustain: 0.0
+  release: 1200</div>
+
+      <h4>5. Warm String Ensemble (Slow Bowing Swell & Full Sustain)</h4>
+      <div class="code-block"># instruments/strings.yaml
+harmonics:
+  - { z: 1, amplitude: 1.0 }
+  - { z: 2, amplitude: 0.7 }
+  - { z: 3, amplitude: 0.45 }
+  - { z: 4, amplitude: 0.3 }
+adsr:
+  attack: 150
+  decay: 200
+  sustain: 0.85
+  release: 600</div>
+
+      <h4>6. Plucked Guitar (Sharp Transient & Rapid Decay)</h4>
+      <div class="code-block"># instruments/guitar.yaml
+harmonics:
+  - { z: 1, amplitude: 1.0 }
+  - { z: 2, amplitude: 0.4 }
+  - { z: 3, amplitude: 0.2 }
+adsr:
+  attack: 2
+  decay: 150
+  sustain: 0.15
+  release: 120</div>
+
+      <h4>7. 80s Sub Bass Synth (Deep Fundamental & Sub-Octave)</h4>
+      <div class="code-block"># instruments/sub_bass.yaml
+harmonics:
+  - { z: 0.5, amplitude: 0.4 }
+  - { z: 1, amplitude: 1.0 }
+  - { z: 2, amplitude: 0.6 }
+adsr:
+  attack: 10
+  decay: 120
+  sustain: 0.7
+  release: 100</div>
+    </div>
+
+    <!-- TAB 3: MELODY, CHORD & TRACK -->
+    <div class="tab-pane" id="tab-melody">
+      <p>Melodies and Chords contain the note data, and Tracks mix and sequence them on the timeline.</p>
+      
+      <h3>Melody Schema</h3>
+      <p>Melodies define a sequence of notes. Notes play sequentially (one after another); <strong>offsets are not used in melodies</strong>. You can also configure a melody to loop continuously to fill the composition duration:</p>
+      <div class="code-block"># melodies/theme.yaml
+instrument: sine_pad  # References an instrument name in instruments/
+loop: true            # Optional: Enable loop
+loop_start: 1.0       # Optional: Start beat of loop (notes before play once as intro)
+loop_end: 3.0         # Optional: End beat of loop (defaults to melody duration)
+notes:
+  - { pitch: 0,  duration: 1.0 }  # Plays sequentially starting at beat 0
+  - { pitch: 4,  duration: 1.0 }  # Plays sequentially starting at beat 1
+  - { pitch: rest, duration: 1.0 } # Rest / Silence</div>
+      <ul>
+        <li><code>pitch</code>: Integer interval from root frequency, or the string <code>'rest'</code>.</li>
+        <li><code>duration</code>: Note duration in beats (float > 0).</li>
+        <li><code>loop</code>, <code>loop_start</code>, <code>loop_end</code>: Configuration to repeat melody sections continuously.</li>
+      </ul>
+
+      <h3>Chord Schema</h3>
+      <p>Chords define pitches played simultaneously. Because they are simultaneous, <strong>chords do not need offsets or durations inside their YAML file</strong>. Each file in <code>chords/</code> contains:</p>
+      <div class="code-block"># chords/c_major.yaml
+instrument: choir_pad # References instrument in instruments/
+pitches: [0, 4, 7]    # Pitch intervals played together</div>
+
+      <h3>Track Schema</h3>
+      <p>Tracks sequence melodies and chords. You can play a melody or chord at any point on the timeline by specifying its <code>offset</code> (and <code>duration</code> for chords) in the track YAML file in <code>tracks/</code>:</p>
+      <div class="code-block"># tracks/main_track.yaml
+volume: 0.8  # Master track volume level (float, 0.0 - 1.0)
+melodies:
+  # Play the theme melody twice at different offsets
+  - { name: theme, offset: 0 }
+  - { name: theme, offset: 6 }
+chords:
+  # Play C Major chord at beat 0 and beat 3 for 3.0 beats duration each
+  - { name: c_major, offset: 0, duration: 3.0 }
+  - { name: c_major, offset: 3, duration: 3.0 }</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="prompt-modal" id="dialog-modal">
+  <div class="modal-card">
+    <h3 id="dialog-title">Title</h3>
+    <p id="dialog-message"></p>
+    <input type="text" id="dialog-input" class="modal-input" />
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="dialog-cancel">Cancel</button>
+      <button class="modal-btn confirm" id="dialog-confirm">OK</button>
+    </div>
+  </div>
+</div>
+

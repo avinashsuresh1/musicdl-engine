@@ -1,0 +1,38 @@
+{
+  "name": "musicdl-engine",
+  "version": "1.1.8",
+  "description": "Software player engine, editor UI, and Web Audio/Tauri desktop runtime for MusicDL",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24.18.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "tauri:build": "tauri build && node scripts/bundle-appimage.js"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4",
+    "@types/js-yaml": "^4.0.9",
+    "typescript": "^5.5.0",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.6"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "esbuild-wasm": "0.28.1",
+    "js-yaml": "^5.2.1"
+  },
+  "overrides": {
+    "vite": {
+      "esbuild": "npm:esbuild-wasm@0.28.1"
+    },
+    "vitest": {
+      "esbuild": "npm:esbuild-wasm@0.28.1"
+    }
+  }
+}
