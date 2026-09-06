@@ -526,7 +526,10 @@ export class Toolbar extends HTMLElement {
     bpmInput.value = comp.tempo.toString();
     rootInput.value = comp.rootFrequency.toString();
     intervalInput.value = comp.interval.toString();
-    titleEl.textContent = comp.title || 'Untitled';
+    const songTitle = comp.title || 'Untitled';
+    titleEl.textContent = songTitle;
+    titleEl.setAttribute('title', `Song Title: ${songTitle}`);
+    titleEl.setAttribute('data-title', songTitle);
   }
 
   private render() {
