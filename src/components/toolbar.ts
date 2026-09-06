@@ -336,6 +336,13 @@ export class Toolbar extends HTMLElement {
     const rootInput = this.shadowRoot!.querySelector('#input-root') as HTMLInputElement;
     const intervalInput = this.shadowRoot!.querySelector('#input-interval') as HTMLInputElement;
 
+    const toggleSidebarBtn = this.shadowRoot!.querySelector('#btn-toggle-sidebar');
+    if (toggleSidebarBtn) {
+      toggleSidebarBtn.addEventListener('click', () => {
+        this.dispatchEvent(new CustomEvent('toggle-sidebar', { bubbles: true, composed: true }));
+      });
+    }
+
     // Help button
     helpBtn.addEventListener('click', () => {
       this.dispatchEvent(new CustomEvent('show-help', { bubbles: true, composed: true }));
@@ -355,12 +362,23 @@ export class Toolbar extends HTMLElement {
       this.dispatchEvent(new CustomEvent('trigger-test', { bubbles: true, composed: true }));
     });
 
+    const setPlayBtnState = (icon: string, text: string) => {
+      const iconEl = playBtn.querySelector('.t-icon');
+      const textEl = playBtn.querySelector('.t-text');
+      if (iconEl && textEl) {
+        iconEl.textContent = icon;
+        textEl.textContent = text;
+      } else {
+        playBtn.innerHTML = `<span class="t-icon">${icon}</span><span class="t-text">${text}</span>`;
+      }
+    };
+
     audioEngine.addEventListener('state-changed', (e: any) => {
       const state = e.detail.state;
       if (state === 'playing') {
-        playBtn.innerHTML = `⏸ Pause`;
+        setPlayBtnState('⏸', 'Pause');
       } else {
-        playBtn.innerHTML = `▶ Run`;
+        setPlayBtnState('▶', 'Run');
       }
     });
 
@@ -369,12 +387,12 @@ export class Toolbar extends HTMLElement {
       const isRendering = e.detail.rendering;
       if (isRendering) {
         playBtn.classList.add('rendering');
-        playBtn.innerHTML = `⏳ Loading...`;
+        setPlayBtnState('⏳', 'Loading...');
         playBtn.setAttribute('disabled', 'true');
       } else {
         playBtn.classList.remove('rendering');
         const state = (audioEngine as any).state;
-        playBtn.innerHTML = state === 'playing' ? `⏸ Pause` : `▶ Run`;
+        setPlayBtnState(state === 'playing' ? '⏸' : '▶', state === 'playing' ? 'Pause' : 'Run');
         playBtn.removeAttribute('disabled');
       }
     });

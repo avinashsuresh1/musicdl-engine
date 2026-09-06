@@ -8,15 +8,15 @@
 }
 
 .visualizer-header {
-  height: 30px;
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  height: clamp(1.6rem, 3.5vh, 2rem);
+  border-bottom: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.08));
   background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  font-size: 11px;
+  padding: 0 clamp(0.5rem, 1vw, 1rem);
+  font-size: clamp(0.65rem, 0.75vw, 0.75rem);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.08em;
   color: var(--text-muted, #8e8e93);
   font-weight: 600;
   flex-shrink: 0;
@@ -30,21 +30,21 @@
 
 /* Ruler */
 .ruler {
-  height: 24px;
+  height: 1.5rem;
   position: relative;
   background: #110f22;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.05);
   box-sizing: border-box;
   user-select: none;
 }
 
 .ruler-left-padding {
-  width: 120px;
+  width: clamp(6.5rem, 10vw, 8.5rem);
   position: sticky;
   left: 0;
   height: 100%;
   background: #110f22;
-  border-right: 1px solid rgba(255,255,255,0.08);
+  border-right: 0.0625rem solid rgba(255,255,255,0.08);
   z-index: 5;
   display: inline-block;
   vertical-align: top;
@@ -60,20 +60,20 @@
 .ruler-tick {
   position: absolute;
   bottom: 0;
-  height: 10px;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  height: 0.6rem;
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.08);
   font-family: monospace;
-  font-size: 8px;
+  font-size: 0.55rem;
   color: var(--text-muted, #8e8e93);
-  padding-left: 3px;
+  padding-left: 0.2rem;
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;
 }
 
 .ruler-tick.bar-tick {
-  height: 18px;
-  border-left: 1px solid rgba(0, 242, 254, 0.25);
+  height: 1.1rem;
+  border-left: 0.0625rem solid rgba(0, 242, 254, 0.25);
   color: var(--secondary, #00f2fe);
   font-weight: 700;
 }
@@ -87,27 +87,27 @@
 
 .lane-row {
   display: flex;
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.04));
+  border-bottom: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.04));
   box-sizing: border-box;
 }
 
 .lane-header {
-  width: 120px;
+  width: clamp(6.5rem, 10vw, 8.5rem);
   background: #100e1e;
-  border-right: 1px solid rgba(255,255,255,0.08);
+  border-right: 0.0625rem solid rgba(255,255,255,0.08);
   position: sticky;
   left: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 12px;
+  padding: 0 0.75rem;
   box-sizing: border-box;
   flex-shrink: 0;
 }
 
 .lane-name {
-  font-size: 13px;
+  font-size: clamp(0.75rem, 0.8vw, 0.85rem);
   font-weight: 600;
   color: var(--text-main, #f5f5f7);
   white-space: nowrap;
@@ -116,7 +116,7 @@
 }
 
 .lane-vol {
-  font-size: 10px;
+  font-size: 0.65rem;
   color: var(--text-muted, #8e8e93);
 }
 
@@ -130,13 +130,13 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.02);
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.02);
   box-sizing: border-box;
   pointer-events: none;
 }
 
 .grid-tick-line.bar-line {
-  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.05);
 }
 
 /* Playback Playhead Line */
@@ -144,32 +144,32 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 0.0625rem;
   background: var(--secondary, #00f2fe);
-  box-shadow: 0 0 8px var(--secondary, #00f2fe);
+  box-shadow: 0 0 0.5rem var(--secondary, #00f2fe);
   z-index: 10;
   pointer-events: none;
-  left: 120px; /* aligns with starts of grid */
+  left: clamp(6.5rem, 10vw, 8.5rem);
 }
 
 /* Note blocks */
 .note-block {
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  border-radius: 4px;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  border-radius: 0.25rem;
   box-sizing: border-box;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   opacity: 0.6;
   transition: all 0.12s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  box-shadow: inset 0 0.0625rem 0 rgba(255,255,255,0.15);
 }
 
 .note-label {
-  font-size: 9px;
+  font-size: 0.6rem;
   color: #000000;
   font-weight: 700;
 }
@@ -179,6 +179,6 @@
   opacity: 1.0;
   transform: scaleY(1.06);
   border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 15px var(--color-glow);
+  box-shadow: 0 0 1rem var(--color-glow);
   filter: brightness(1.2);
 }

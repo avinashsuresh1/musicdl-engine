@@ -137,13 +137,25 @@ export class AppShell extends HTMLElement {
       }
     };
 
-    this.addEventListener('trigger-test', () => handleTestFile());
-    this.addEventListener('trigger-test-file', (e: any) => handleTestFile(e.detail.path));
+    const mainContainer = this.shadowRoot!.querySelector('.main-container') as HTMLElement;
+
+    const toggleSidebar = () => {
+      if (window.innerWidth < 768) {
+        mainContainer.classList.toggle('sidebar-open');
+      } else {
+        mainContainer.classList.toggle('sidebar-collapsed');
+      }
+    };
+
+    this.addEventListener('toggle-sidebar', toggleSidebar);
 
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.altKey && (e.key === 't' || e.key === 'T')) {
         e.preventDefault();
         handleTestFile();
+      } else if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
+        e.preventDefault();
+        toggleSidebar();
       }
     });
 

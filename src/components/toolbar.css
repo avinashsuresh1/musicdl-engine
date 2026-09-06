@@ -2,66 +2,63 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 48px;
+  min-height: clamp(2.5rem, 5vh, 3.5rem);
+  height: auto;
   background: var(--bg-toolbar, #141224);
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  padding: 0 12px;
-  gap: 8px;
+  border-bottom: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.08));
+  padding: 0.35rem clamp(0.35rem, 1vw, 1rem);
+  gap: clamp(0.25rem, 0.6vw, 0.75rem);
   user-select: none;
   box-sizing: border-box;
   width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex-wrap: wrap;
 }
 
-:host::-webkit-scrollbar {
-  display: none;
+.left-section,
+.center-section,
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.2rem, 0.4vw, 0.5rem);
+  flex-wrap: nowrap;
 }
 
 .left-section {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .center-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   flex: 0 0 auto;
 }
 
 .right-section {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   flex: 0 0 auto;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.35rem;
   font-weight: 700;
-  font-size: 15px;
+  font-size: clamp(0.85rem, 1.1vw, 1.1rem);
   background: linear-gradient(90deg, var(--secondary, #00f2fe), var(--primary, #9b51e0));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
   flex-shrink: 0;
 }
 
 .logo-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 0.25rem;
   object-fit: contain;
 }
 
 .playback-indicator {
-  width: 7px;
-  height: 7px;
+  width: 0.45rem;
+  height: 0.45rem;
   border-radius: 50%;
   background: var(--text-muted, #8e8e93);
   transition: background 0.3s ease;
@@ -70,7 +67,7 @@
 
 .playback-indicator.playing {
   background: var(--secondary, #00f2fe);
-  box-shadow: 0 0 8px var(--secondary, #00f2fe);
+  box-shadow: 0 0 0.5rem var(--secondary, #00f2fe);
   animation: pulse 1.5s infinite;
 }
 
@@ -81,30 +78,31 @@
 }
 
 .project-title {
-  font-size: 11px;
+  font-size: clamp(0.68rem, 0.75vw, 0.8rem);
   color: var(--text-main, #f5f5f7);
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  padding-left: 6px;
+  border-left: 0.0625rem solid rgba(255, 255, 255, 0.15);
+  padding-left: 0.4rem;
   font-weight: 500;
-  max-width: 85px;
+  max-width: clamp(4rem, 8vw, 8rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 1;
+  flex: 0 1 auto;
 }
 
 .btn {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08);
   color: var(--text-main, #f5f5f7);
-  padding: 4px 7px;
-  height: 28px;
-  border-radius: 5px;
-  font-size: 11px;
+  padding: 0.25rem clamp(0.35rem, 0.6vw, 0.65rem);
+  min-height: 1.7rem;
+  border-radius: 0.35rem;
+  font-size: clamp(0.68rem, 0.75vw, 0.8rem);
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 0.25rem;
   font-family: inherit;
   white-space: nowrap;
   flex-shrink: 0;
@@ -129,20 +127,20 @@
 .btn-primary {
   background: linear-gradient(135deg, var(--primary, #9b51e0), rgba(155, 81, 224, 0.8));
   border: none;
-  box-shadow: 0 2px 8px rgba(155, 81, 224, 0.25);
+  box-shadow: 0 0.15rem 0.5rem rgba(155, 81, 224, 0.25);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 3px 12px rgba(155, 81, 224, 0.4);
+  box-shadow: 0 0.2rem 0.75rem rgba(155, 81, 224, 0.4);
 }
 
 /* Transport buttons group */
 .transport-group {
   display: flex;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-  padding: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.4rem;
+  padding: 0.15rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05);
   flex-shrink: 0;
 }
 
@@ -150,15 +148,15 @@
   background: transparent;
   border: none;
   color: var(--text-muted, #8e8e93);
-  padding: 3px 8px;
-  height: 26px;
-  border-radius: 4px;
+  padding: 0.2rem clamp(0.35rem, 0.5vw, 0.65rem);
+  min-height: 1.55rem;
+  border-radius: 0.3rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  font-size: 11px;
+  gap: 0.25rem;
+  font-size: clamp(0.68rem, 0.75vw, 0.8rem);
   font-family: inherit;
   font-weight: 600;
   white-space: nowrap;
@@ -177,35 +175,35 @@
 .t-btn.btn-flask {
   color: #ffca28;
   background: rgba(255, 202, 40, 0.1);
-  border: 1px solid rgba(255, 202, 40, 0.2);
+  border: 0.0625rem solid rgba(255, 202, 40, 0.2);
 }
 
 .t-btn.btn-flask:hover {
   color: #ffd54f;
   background: rgba(255, 202, 40, 0.2);
-  box-shadow: 0 0 8px rgba(255, 202, 40, 0.3);
+  box-shadow: 0 0 0.5rem rgba(255, 202, 40, 0.3);
 }
 
 .t-btn.active#btn-play {
   color: var(--secondary, #00f2fe);
   background: rgba(0, 242, 254, 0.1);
-  text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+  text-shadow: 0 0 0.5rem rgba(0, 242, 254, 0.5);
 }
 
 /* Displays */
 .time-display {
   font-family: 'Courier New', Courier, monospace;
   background: #090810;
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-size: 14px;
+  border: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.08));
+  padding: 0.2rem clamp(0.35rem, 0.6vw, 0.75rem);
+  border-radius: 0.35rem;
+  font-size: clamp(0.75rem, 0.95vw, 0.95rem);
   color: var(--secondary, #00f2fe);
   font-weight: 700;
-  letter-spacing: 0.5px;
-  min-width: 80px;
+  letter-spacing: 0.04em;
+  min-width: 5ch;
   text-align: center;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0.125rem 0.25rem rgba(0,0,0,0.5);
   flex-shrink: 0;
 }
 
@@ -213,24 +211,25 @@
 .input-group {
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  border-radius: 5px;
-  padding: 2px 5px;
-  height: 28px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 0.35rem;
+  padding: 0.12rem clamp(0.25rem, 0.4vw, 0.45rem);
+  min-height: 1.65rem;
   box-sizing: border-box;
-  font-size: 11px;
+  font-size: clamp(0.65rem, 0.72vw, 0.78rem);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .input-group label {
   color: var(--text-muted, #8e8e93);
-  margin-right: 3px;
-  font-size: 10px;
+  margin-right: 0.2rem;
+  font-size: clamp(0.58rem, 0.65vw, 0.7rem);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.03em;
   white-space: nowrap;
+  font-weight: 600;
 }
 
 .input-group input {
@@ -238,24 +237,27 @@
   border: none;
   color: var(--text-main, #f5f5f7);
   font-family: inherit;
-  font-size: 11px;
+  font-size: clamp(0.68rem, 0.75vw, 0.8rem);
   font-weight: 600;
   outline: none;
   padding: 0;
 }
 
 #input-bpm {
-  width: 28px;
+  width: 3ch;
+  min-width: 2.5ch;
   text-align: right;
 }
 
 #input-root {
-  width: 48px;
+  width: 5ch;
+  min-width: 4.5ch;
   text-align: right;
 }
 
 #input-interval {
-  width: 32px;
+  width: 3.5ch;
+  min-width: 3ch;
   text-align: right;
 }
 
@@ -270,4 +272,73 @@
   background: rgba(255, 159, 10, 0.1);
   cursor: wait;
   animation: pulse 1.0s infinite;
+}
+
+/* --- Responsive Collapsing & Breakpoint Rules --- */
+
+/* Desktop to Laptop (< 1150px): Hide title & collapse button text */
+@media (max-width: 71.875em) {
+  .project-title {
+    display: none;
+  }
+  .btn-text {
+    display: none;
+  }
+  .btn {
+    padding: 0.25rem 0.4rem;
+  }
+}
+
+/* Tablet viewports (< 840px): Hide logo text & transport button text */
+@media (max-width: 52.5em) {
+  .logo-text {
+    display: none;
+  }
+  .t-text {
+    display: none;
+  }
+  .time-display {
+    font-size: 0.78rem;
+    min-width: 4.5ch;
+    padding: 0.15rem 0.3rem;
+  }
+}
+
+/* Compact viewports (< 640px): Tighten padding & scale input fields */
+@media (max-width: 40em) {
+  :host {
+    justify-content: space-between;
+    padding: 0.25rem 0.35rem;
+    gap: 0.25rem;
+  }
+  .right-section {
+    gap: 0.15rem;
+  }
+  .input-group {
+    padding: 0.1rem 0.2rem;
+  }
+  .input-group label {
+    font-size: 0.55rem;
+    margin-right: 0.1rem;
+  }
+  #input-root {
+    width: 4ch;
+  }
+}
+
+/* Ultra-compact phone screens (< 480px): Dynamic 2-row header wrap so ZERO items are cut off */
+@media (max-width: 30em) {
+  :host {
+    flex-wrap: wrap;
+    row-gap: 0.3rem;
+    justify-content: center;
+  }
+  .left-section,
+  .center-section,
+  .right-section {
+    justify-content: center;
+  }
+  .right-section {
+    margin-left: 0;
+  }
 }
