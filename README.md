@@ -56,4 +56,4 @@ npm run tauri:build
 
 ## 🔗 Related Repositories
 
-* **[`musicdl-spec`](https://github.com/avinashsuresh1/musicdl-spec))**: A YAML-based specification for music composition using text files and folders/directories.
+* **[`musicdl-spec`](https://github.com/avinashsuresh1/musicdl-spec)**: A YAML-based specification for music composition using text files and folders/directories.
