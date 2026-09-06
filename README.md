@@ -1,6 +1,6 @@
 # 🎼 MusicDL Engine (`musicdl-engine`)
 
-**`musicdl-engine`** is one implementation of the **[MusicDL Specification (`musicdl-spec`)](file:///d:/MusicDL/musicdl-spec)**.
+**`musicdl-engine`** is one implementation of the **[MusicDL Specification (`musicdl-spec`)](https://github.com/avinashsuresh1/musicdl-spec)**.
 
 It provides the software parser, timeline scheduler, PCM synthesizer renderer, interactive Web Component desktop editor, and Web Audio / Tauri WASAPI native audio runtime written in TypeScript and Rust.
 
@@ -56,4 +56,4 @@ npm run tauri:build
 
 ## 🔗 Related Repositories
 
-* **[`musicdl-spec`](file:///d:/MusicDL/musicdl-spec)**: A language-agnostic YAML specification, schema definitions and example compositions.
+* **[`musicdl-spec`](https://github.com/avinashsuresh1/musicdl-spec))**: A YAML-based specification for music composition using text files and folders/directories.
