@@ -1,6 +1,6 @@
 {
   "name": "musicdl-engine",
-  "version": "1.9.0",
+  "version": "1.1.9",
   "description": "Software player engine, editor UI, and Web Audio/Tauri desktop runtime for MusicDL",
   "type": "module",
   "private": true,
